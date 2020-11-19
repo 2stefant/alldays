@@ -1,3 +1,3 @@
 module.exports = function alldays() {
-  return new string ["2020-11-19"];
+  return ["2020-11-19"];
 };
