@@ -1,31 +1,47 @@
 # alldays
 alldays - calculates all specific (e.g. sunday) days between two dates.
 
-# Install
+# Usage
+
+## Install
 ```
 $ npm install "@2stefant.org/alldays"
 ```
 
-# Usage
-
-## No arguments, means all sundays(index 0) this year.
+## Declare - in a javascript code file
 ``` javascript
 const alldays = require("@2stefant.org/alldays");
-let days=alldays();
+```
+
+## Call
+
+### Zero or one argument, index range 0-6, 10-16, 20-26
+``` javascript
+let days=alldays(); //No args = 0 = sundays this whole year.
+console.log(JSON.stringify(days));
+
+days=alldays(4); //4 = thursdays this whole year.
+console.log(JSON.stringify(days));
+
+days=alldays(10); //10 = sundays this year until current week.
+console.log(JSON.stringify(days));
+
+days=alldays(26); //26 = saturdays this year until current month.
 console.log(JSON.stringify(days));
 ```
 
-## From specific date
+### From specific date
 ``` javascript
-const alldays = require("@2stefant.org/alldays");
-let days=alldays("2020-10-01", 2); //2 means tuesdays
+days=alldays(2, "2020-10-01"); //2 = tuesdays this whole year.
+console.log(JSON.stringify(days));
+
+days=alldays(20, "2020-10-01"); //2 = tuesdays until current month.
 console.log(JSON.stringify(days));
 ```
 
-## Specific date range
+### Specific date range
 ``` javascript
-const alldays = require("@2stefant.org/alldays");
-let days=alldays("2020-10-01", "2020-12-01", 5); //5 means all fridays
+days=alldays(15, "2020-10-01", "2020-12-01"); //5 = fridays until current week.
 console.log(JSON.stringify(days));
 ```
 
