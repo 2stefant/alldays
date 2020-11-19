@@ -10,7 +10,7 @@ $ npm install "@2stefant.org/alldays"
 
 ## Declare - in a javascript code file
 ``` javascript
-const alldays = require("@2stefant.org/alldays");
+const {alldays} = require("@2stefant.org/alldays");
 ```
 
 ## Call
