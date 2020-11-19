@@ -45,3 +45,25 @@ days=alldays(15, "2020-10-01", "2020-12-01"); //5 = fridays until current week.
 console.log(JSON.stringify(days));
 ```
 
+# Howto update npm package
+
+- Update version in the package.json file
+```
+  "version": "1.5.0",
+```
+  
+- Login, add username, password and email
+```
+$ npm adduser
+```
+
+- Publish package
+```
+$ npm publish --access=public
+```
+
+- Upgrade version in your consumer application
+```
+$ npm add "@2stefant.org/alldays"  
+```
+
