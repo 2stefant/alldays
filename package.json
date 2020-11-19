@@ -1,0 +1,14 @@
+{
+"name": "@2stefant.org/alldays",
+  "version": "1.0.0",
+  "description": "alldays - calculates all specific (e.g. sunday) days between two dates.",
+  "license": "MIT",
+  "repository": "2stefant/alldays",
+  "main": "index.js",
+  "keywords": [
+    "alldays",
+    "npm",
+    "package",
+    "2stefant"
+  ]
+}
