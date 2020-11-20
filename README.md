@@ -5,10 +5,11 @@ and returns a list of strings in YYYY-MM-DD short calendar iso format.
 
 # Technologies
 This npm package is written with:
-- Typescript.
-- Jest, JavaScript Testing Framework with Code coverage enabled as default.
-- TSLint, static analysis tool.
-- JavaScript date library for parsing, validating, manipulating and formatting dates.
+- Visual Studio Code
+- Typescript
+- Jest, JavaScript Testing Framework with Code coverage enabled as default
+- TSLint, static analysis tool
+- Moment.js, javaScript date library for parsing, validating, manipulating and formatting dates
 
 # Usage
 
