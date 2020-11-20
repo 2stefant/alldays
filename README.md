@@ -8,6 +8,9 @@ and returns a list of strings in YYYY-MM-DD short calendar iso format.
 ## Install
 `npm install "@2stefant.org/alldays"`
 
+## Upgrade to newer version
+`npm update "@2stefant.org/alldays"`
+
 ## Declare - in a javascript code file
 ``` javascript
 const {alldays} = require("@2stefant.org/alldays");
@@ -18,6 +21,7 @@ const {alldays} = require("@2stefant.org/alldays");
 In the examples below, only options 1-7 are verified stable so far. \
 The higher options are NOT IMPLEMENTED YET.
 
+### Detailed information
 Additionally the method _alldaysVerbose_ aids in assisting during  \
 implementation and securing the correct days, it returns detailed information:
 ```javascript
@@ -59,7 +63,7 @@ days=alldays(15, "2020-10-01", "2020-12-01"); //5 = fridays until current week.
 console.log(JSON.stringify(days));
 ```
 
-# Howto update npm package
+# How to update an npm package
 
 ### Update version in the package.json file
 ``` json
@@ -73,6 +77,4 @@ console.log(JSON.stringify(days));
 ### Publish package
 `npm publish --access=public`
 
-### Upgrade version in your consumer application
-`npm update "@2stefant.org/alldays"`
 
