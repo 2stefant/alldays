@@ -33,9 +33,23 @@ export const alldaysVerbose = (
         throw new Error("Only 1-7 is implemented so far.");
     }
 
-    const range=determineRange(isoFrom, isoTo);
     const logs: string[]=[];
     const foundDays: string[] = [];
+
+    const range=determineRange(isoFrom, isoTo);
+
+    const searchCriteria=buildSearchCriteria(
+        isoFrom, isoTo, isoDayIndex, 
+        range.start, range.end);
+
+    if(!range.validArgs){
+        return {
+            searchCriteria: searchCriteria,
+            alldays: foundDays,
+            logs: logs.join("\r\n"),
+        };
+    }
+
     let current = range.start.clone();
 
     while (current.isSameOrBefore(range.end)) {
@@ -69,10 +83,6 @@ export const alldaysVerbose = (
         }
     }
 
-    const searchCriteria=buildSearchCriteria(
-        isoFrom, isoTo, isoDayIndex, 
-        range.start, range.end);
-
     return {
         searchCriteria: searchCriteria,
         alldays: foundDays,
@@ -89,22 +99,41 @@ export const determineRange = (
     isoTo: string): 
     {
         start: moment.Moment, 
-        end: moment.Moment 
+        end: moment.Moment,
+        validArgs: boolean 
     } =>
 {
-    const firstDayOfYear = (isoFrom) 
-    ? moment(isoFrom).startOf("year") 
-    : firstDayCurrentYear;
+    let hasErrors=false;
+
+    let temp=firstDayCurrentYear;
+    if(isoFrom){
+        temp=moment(isoFrom); 
+        if(!temp.isValid()) {
+            hasErrors=true;
+        }
+    } 
     
-    const start = moment((isoFrom) 
-        ? isoFrom
-        : firstDayOfYear); 
+    let start= temp.clone();
 
-    const end = moment((isoTo) 
-        ? isoTo            
-        : lastDayCurrentYear); 
+    if(!hasErrors){
+        start=temp.startOf("year"); // firstDayOfYear
+    }
 
-    return { start: start, end: end};
+    let end=lastDayCurrentYear;
+    if(isoTo){
+        temp=moment(isoTo); 
+        if(!temp.isValid()) {
+            hasErrors=true;
+        }else{
+            end=temp.clone();
+        }
+    } 
+
+    return { 
+        start: start, 
+        end: end, 
+        validArgs: !hasErrors 
+    };
 }
 
 export const buildSearchCriteria = (

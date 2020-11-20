@@ -1,6 +1,6 @@
 {
   "name": "@2stefant.org/alldays",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "alldays calculates all specific (e.g. sunday) days between two iso week days (1-7 means monday to sunday) and returns a list of strings in YYYY-MM-DD short calendar iso format.",
   "license": "MIT",
   "main": "lib/index.js",
