@@ -30,18 +30,18 @@ export const alldaysVerbose = (
         } => {
 
     if(isoDayIndex < 1 || isoDayIndex > 7){
-        throw "Only 1-7 is implemented so far."
+        throw new Error("Only 1-7 is implemented so far.");
     }
 
     const range=determineRange(isoFrom, isoTo);
-    let logs: string[]=[];
+    const logs: string[]=[];
     const foundDays: string[] = [];
     let current = range.start.clone();
 
     while (current.isSameOrBefore(range.end)) {
         
         let info=null;
-        let infoBefore=current.format(isoDayFormat);
+        const infoBefore=current.format(isoDayFormat);
 
         if (current.isoWeekday() <= isoDayIndex) {
             info="  Day is LT/EQ wanted weekday, position on it.";
@@ -51,7 +51,7 @@ export const alldaysVerbose = (
             current=current.add(1, "weeks").isoWeekday(isoDayIndex);
         }
         
-        let isoDay=current.format(isoDayFormat);
+        const isoDay=current.format(isoDayFormat);
         info+=`
         before: '${infoBefore}', after: '${isoDay}'`;
 
@@ -73,7 +73,7 @@ export const alldaysVerbose = (
         isoFrom, isoTo, isoDayIndex, 
         range.start, range.end);
 
-    return{
+    return {
         searchCriteria: searchCriteria,
         alldays: foundDays,
         logs: logs.join("\r\n"),
@@ -104,7 +104,7 @@ export const determineRange = (
         ? isoTo            
         : lastDayCurrentYear); 
 
-    return { start: start, end: end}
+    return { start: start, end: end};
 }
 
 export const buildSearchCriteria = (
