@@ -4,6 +4,7 @@
     "module": "commonjs",
     "types": ["jest"],
     "declaration": true,
+    "esModuleInterop": true,
     "outDir": "./lib",
     "strict": true
   },
