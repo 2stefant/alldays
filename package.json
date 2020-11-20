@@ -1,7 +1,7 @@
 {
   "name": "@2stefant.org/alldays",
-  "version": "1.5.0",
-  "description": "alldays - calculates all specific (e.g. sunday) days between two dates.",
+  "version": "1.8.0",
+  "description": "alldays calculates all specific (e.g. sunday) days between two iso week days (1-7 means monday to sunday) and returns a list of strings in YYYY-MM-DD short calendar iso format.",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,9 +19,11 @@
   "repository": "2stefant/alldays",
   "keywords": [
     "alldays",
-    "npm",
-    "package",
-    "2stefant"
+    "2stefant",
+    "isoweekday",
+    "shortdate",
+    "sundays",
+    "daterange"
   ],
   "author": "2stefant",
   "bugs": {

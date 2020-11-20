@@ -1,15 +1,13 @@
-import { alldays, isFirstSevenDaysOfYear, isoDayFormat} from "../index";
+import { alldays, isoDayFormat } from "../index";
 import moment from "moment";
 
-
-test("alldays - No args = 0 = sundays current whole year.", () => {
+test("alldays, 7 = sundays whole year 2020.", () => {
     //Arrange
     let expected = new Set(allSundays2020());
     //Act
-    let days = new Set(alldays(0));
+    let days = new Set(alldays(7, "2020-01-01"));
     //Assert
     expect(days).toEqual(expected);
-
 });
 
 const allSundays2020 = (): string[] => {
@@ -26,20 +24,28 @@ const allSundays2020 = (): string[] => {
         "2020-12-13", "2020-12-20", "2020-12-27"];
 }
 
-
-test("isFirstSevenDaysOfYear", () => {
-    const prefix = "2020-01-0";
-    for (let ix = 1; ix <= 8; ix++) {
-        //Arrange
-        let expected = ix < 8;
-        let mom = moment(`${prefix}${ix}`);
-        //Act
-        let result = isFirstSevenDaysOfYear(mom);
-        //console.log(mom.day() + " - " + mom.format("YYYY-MM-DD"));
-        //Assert
-        expect(result).toEqual(expected);
-    }
+test("alldays, 4 = thursdays whole year 2020.", () => {
+    //Arrange
+    let expected = new Set(allThursdays2020());
+    //Act
+    let days = new Set(alldays(4, "2020-01-01"));
+    //Assert
+    expect(days).toEqual(expected);
 });
+
+const allThursdays2020 = (): string[] => {
+    return ["2020-01-02", "2020-01-09", "2020-01-16", "2020-01-23", "2020-01-30",
+        "2020-02-06", "2020-02-13", "2020-02-20", "2020-02-27", "2020-03-05",
+        "2020-03-12", "2020-03-19", "2020-03-26", "2020-04-02", "2020-04-09",
+        "2020-04-16", "2020-04-23", "2020-04-30", "2020-05-07", "2020-05-14",
+        "2020-05-21", "2020-05-28", "2020-06-04", "2020-06-11", "2020-06-18",
+        "2020-06-25", "2020-07-02", "2020-07-09", "2020-07-16", "2020-07-23",
+        "2020-07-30", "2020-08-06", "2020-08-13", "2020-08-20", "2020-08-27",
+        "2020-09-03", "2020-09-10", "2020-09-17", "2020-09-24", "2020-10-01",
+        "2020-10-08", "2020-10-15", "2020-10-22", "2020-10-29", "2020-11-05",
+        "2020-11-12", "2020-11-19", "2020-11-26", "2020-12-03", "2020-12-10",
+        "2020-12-17", "2020-12-24", "2020-12-31"];
+}
 
 //Learns about moment api.
 test("firstDayCurrentYear", () => {

@@ -1,27 +1,43 @@
 # alldays
-alldays - calculates all specific (e.g. sunday) days between two dates.
+_alldays_ calculates all specific (e.g. sunday) days between \
+two iso week days (1-7 means monday to sunday) \
+and returns a list of strings in YYYY-MM-DD short calendar iso format.
 
 # Usage
 
 ## Install
-### `npm install "@2stefant.org/alldays"`
+`npm install "@2stefant.org/alldays"`
 
 ## Declare - in a javascript code file
 ``` javascript
 const {alldays} = require("@2stefant.org/alldays");
 ```
-
 ## Call
 
-### Zero or one argument, index range 0-6, 10-16, 20-26
+### Implemented so far
+In the examples below, only options 1-7 are verified stable so far. \
+The higher options are NOT IMPLEMENTED YET.
+
+Additionally the method _alldaysVerbose_ aids in assisting during  \
+implementation and securing the correct days, it returns detailed information:
+```javascript
+//alldaysVerbose()
+return {
+    searchCriteria: string,
+    alldays: string[],
+    logs: string
+};
+```
+
+### Zero or one argument, index range 1-7, 10-17, 20-27
 ``` javascript
-let days=alldays(); //No args = 0 = sundays current whole year.
+let days=alldays(); //No args = 7 = sundays current whole year.
 console.log(JSON.stringify(days));
 
 days=alldays(4); //4 = thursdays current whole year.
 console.log(JSON.stringify(days));
 
-days=alldays(10); //10 = sundays current year until current week.
+days=alldays(17); //17 = sundays current year until current week.
 console.log(JSON.stringify(days));
 
 days=alldays(26); //26 = saturdays current year until current month.
@@ -45,17 +61,18 @@ console.log(JSON.stringify(days));
 
 # Howto update npm package
 
-Update version in the package.json file
+### Update version in the package.json file
 ``` json
-  "version": "1.5.0",
+  "version": "1.X.0",
 ```
-  
-Login, add username, password and email
-### `npm adduser`
+### Commit changes to github repo
 
-Publish package
-### `npm publish --access=public`
+### Open npm prompt, perform login to npm (add username, password and email)
+`npm adduser`
 
-Upgrade version in your consumer application
-### `npm update "@2stefant.org/alldays"`
+### Publish package
+`npm publish --access=public`
+
+### Upgrade version in your consumer application
+`npm update "@2stefant.org/alldays"`
 
