@@ -3,6 +3,13 @@ _alldays_ calculates all specific (e.g. sunday) days between \
 two iso week days (1-7 means monday to sunday) \
 and returns a list of strings in YYYY-MM-DD short calendar iso format.
 
+# Technologies
+This npm package is written with:
+- Typescript.
+- Jest, JavaScript Testing Framework with Code coverage enabled as default.
+- TSLint, static analysis tool.
+- JavaScript date library for parsing, validating, manipulating and formatting dates.
+
 # Usage
 
 ## Install
