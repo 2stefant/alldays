@@ -3,7 +3,7 @@ import moment from "moment";
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
  * @description Calculates specific week days between a date range.
  * @summary All days in the params are formatted in iso8601 format "YYYY-MM-DD".
- * @param index default 7, 1-7 (mon-sun), 10-17, 20-27. 
+ * @param isoDayIndex default 7, 1-7 (mon-sun), 10-17, 20-27. 
  * @param isoFrom default "", from day, iso formatted.
  * @param isoTo default "", to day, iso formatted.
  * @returns string array with same week days, e.g. mondays, iso formatted.
@@ -11,7 +11,7 @@ import moment from "moment";
  * @see iso8601 https://www.iso.org/iso-8601-date-and-time-format.html
  */
 export const alldays = (
-    isoDayIndex: number = 7,  //isoweek 1-7 (mon-sun)
+    isoDayIndex: number = 7,  
     isoFrom: string = "",
     isoTo: string = ""): string[] => 
 {
@@ -20,7 +20,7 @@ export const alldays = (
 }
 
 export const alldaysVerbose = (
-    isoDayIndex: number = 7,  //isoweek 1-7 (mon-sun)
+    isoDayIndex: number = 7,  
     isoFrom: string = "",
     isoTo: string = ""): 
         {
