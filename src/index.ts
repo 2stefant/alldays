@@ -160,3 +160,8 @@ export const getMomentWeeksRelative = (mom: moment.Moment, weekOffset: number): 
 export const getMomentRelative = (mom: moment.Moment, dayOffset: number): moment.Moment => {
     return mom.add(dayOffset, "days");
 }
+
+export const getWeekDayShortNames = (): string[] => {
+    return moment.weekdaysShort();
+}
+
