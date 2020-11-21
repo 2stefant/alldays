@@ -83,6 +83,9 @@ console.log(JSON.stringify(days));
 `npm adduser`
 
 ### Publish package
+First time
 `npm publish --access=public`
 
+Next time
+`npm publish`
 

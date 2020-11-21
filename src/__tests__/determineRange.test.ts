@@ -1,4 +1,4 @@
-import { alldays, isoDayFormat, determineRange, firstDayCurrentYear, lastDayCurrentYear } from "../index";
+import { determineRange, firstDayCurrentYear, lastDayCurrentYear } from "../index";
 import moment from "moment";
 
 describe("determineRange", () => {
