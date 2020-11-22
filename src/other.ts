@@ -1,8 +1,12 @@
 import moment from "moment";
 
-export const getDayMetrics = (isoDay: string): any => {
+export const getDayMetrics = (isoDay: string = ""): any => {
+    if (!isoDay) {
+        isoDay = currentIsoDay;
+    }
     return {
-        day: moment(isoDay).isoWeekday(),
+        day: moment(isoDay).format(isoDayFormat),
+        dayIndex: moment(isoDay).isoWeekday(),
         dayNameShort: moment(isoDay).format('ddd'),
         dayBefore: getDayRelative(isoDay, -1),
         dayAfter: getDayRelative(isoDay, 1),
@@ -11,8 +15,8 @@ export const getDayMetrics = (isoDay: string): any => {
         dayWeekAfter: getDayWeeksRelative(isoDay, 1),
         daysInMonth: moment(isoDay).daysInMonth(),
         week: moment(isoDay).isoWeek(),
-        weekStartDay: getDayInWeek(isoDay,1),
-        weekEndDay: getDayInWeek(isoDay,7),
+        weekStartDay: getDayInWeek(isoDay, 1),
+        weekEndDay: getDayInWeek(isoDay, 7),
         weeksInYear: moment(isoDay).isoWeeksInYear(),
         weekdaysShort: getWeekDaysShort(),
         month: moment(isoDay).month() + 1,
@@ -26,6 +30,7 @@ export const getDayMetrics = (isoDay: string): any => {
         yearStartDay: moment(isoDay).startOf("year").format(isoDayFormat),
         yearEndDay: moment(isoDay).endOf("year").format(isoDayFormat),
         currentDay: moment().isoWeekday(),
+        currentIsoDay: currentIsoDay,
         currentDayNameShort: moment().format('ddd'),
         currentWeek: moment().isoWeek(),
         currentMonth: moment().month() + 1,
@@ -42,10 +47,14 @@ export const getDayMetrics = (isoDay: string): any => {
 export const isoDayFormat = "YYYY-MM-DD";
 export const currentYearStartDay = moment().startOf("year");
 export const currentYearEndDay = moment().endOf("year");
+export const currentIsoDay = moment().format(isoDayFormat);
 export const getMonthsShort = () => moment.monthsShort();
 export const getWeekDaysShort = () => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Total"];
 
-export const getDayInWeek = (isoDay: string, isoDayIndex: number): string => {
+export const getDayInWeek = (isoDay: string = "", isoDayIndex: number = 7): string => {
+    if (!isoDay) {
+        isoDay = currentIsoDay;
+    }
     VerifyIsoDayIndex(isoDayIndex);
     return moment(isoDay).isoWeekday(isoDayIndex).format(isoDayFormat);
 }

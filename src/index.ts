@@ -9,6 +9,7 @@ import { determineRange, buildSearchCriteria } from "./determineRange";
  * @param isoTo default "", to day, iso formatted.
  * @returns string array with same week days, e.g. mondays, iso formatted.
  * @example let days = alldays(7, "2020-01-01", "2020-12-31"); 
+ * @see verbose call the alldaysVerbose() method instead.
  * @see iso8601 https://www.iso.org/iso-8601-date-and-time-format.html
  */
 export const alldays = (
@@ -49,28 +50,28 @@ export const alldaysVerbose = (
         };
     }
 
-    let current = range.start.clone();
+    let actual = range.start.clone();
 
-    while (current.isSameOrBefore(range.end)) {
+    while (actual.isSameOrBefore(range.end)) {
 
         let info = null;
-        const infoBefore = current.format(isoDayFormat);
+        const infoBefore = actual.format(isoDayFormat);
 
-        if (current.isoWeekday() <= isoDayIndex) {
+        if (actual.isoWeekday() <= isoDayIndex) {
             info = "  Day is LT/EQ wanted weekday, position on it.";
-            current = current.isoWeekday(isoDayIndex);
+            actual = actual.isoWeekday(isoDayIndex);
         } else {
             info = "  Day is GT wanted weekday, position on next weeks requested day.";
-            current = getMomentRelative(current, 1, "weeks").isoWeekday(isoDayIndex);
+            actual = getMomentRelative(actual, 1, "weeks").isoWeekday(isoDayIndex);
         }
 
-        const isoDay = current.format(isoDayFormat);
+        const isoDay = actual.format(isoDayFormat);
         info += `
         before: '${infoBefore}', after: '${isoDay}'`;
 
-        if (current.isSameOrBefore(range.end)) {
+        if (actual.isSameOrBefore(range.end)) {
             foundDays.push(isoDay);
-            current = getMomentRelative(current, 1, "days");
+            actual = getMomentRelative(actual, 1, "days");
             logs.push(`${info}
             => Found: '${isoDay}', jump to next day.
             `);
@@ -89,5 +90,14 @@ export const alldaysVerbose = (
     };
 }
 
-export const dayMetrics = (isoDay: string) => getDayMetrics(isoDay);
-export const dayInWeek = (isoDay: string, isoDayIndex: number) => getDayInWeek(isoDay, isoDayIndex);
+/**
+ * Gets day metrics for the specified day.
+ * @param isoDay YYYY-MM-DD, default is current day
+ */
+export const dayMetrics = (isoDay: string = "") => getDayMetrics(isoDay);
+/**
+ * Gets the day in the week specified by the index, e.g. 1 becomes monday.
+ * @param isoDay YYYY-MM-DD, default is current day
+ * @param isoDayIndex 1-7, default is sunday 7
+ */
+export const dayInWeek = (isoDay: string = "", isoDayIndex: number = 7) => getDayInWeek(isoDay, isoDayIndex);

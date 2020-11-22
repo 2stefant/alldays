@@ -5,15 +5,16 @@ describe("other", () => {
 
     test("dayInWeek", () => {
         //Assert
-        expect(getDayInWeek("2020-11-22",1)).toEqual("2020-11-16"); // monday
-        expect(getDayInWeek("2020-11-22",5)).toEqual("2020-11-20"); // friday
+        expect(getDayInWeek("2020-11-22", 1)).toEqual("2020-11-16"); // monday
+        expect(getDayInWeek("2020-11-22", 5)).toEqual("2020-11-20"); // friday
     });
 
     test("getDayMetrics - day", () => {
         //Act
         let metrics = getDayMetrics("2019-12-08"); //sunday, w49, day342
         //Assert
-        expect(metrics.day).toEqual(7);
+        expect(metrics.day).toEqual("2019-12-08");
+        expect(metrics.dayIndex).toEqual(7);
         expect(metrics.dayNameShort).toEqual("Sun");
         expect(metrics.dayBefore).toEqual("2019-12-07");
         expect(metrics.dayAfter).toEqual("2019-12-09");
