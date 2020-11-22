@@ -1,5 +1,4 @@
-import { alldays} from "../index";
-import moment from "moment";
+import { alldays } from "../index";
 
 describe("alldays", () => {
 

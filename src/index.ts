@@ -1,4 +1,5 @@
-import moment from "moment";
+import { isoDayFormat, getMomentRelative } from "./other";
+import { determineRange, buildSearchCriteria } from "./determineRange";
 /**
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
  * @description Calculates specific week days between a date range.
@@ -14,8 +15,8 @@ export const alldays = (
     isoDayIndex: number = 7,
     isoFrom: string = "",
     isoTo: string = ""): string[] => {
-    const result = alldaysVerbose(isoDayIndex, isoFrom, isoTo);
-    return result.alldays;
+
+    return alldaysVerbose(isoDayIndex, isoFrom, isoTo).alldays;
 }
 
 export const alldaysVerbose = (
@@ -60,7 +61,7 @@ export const alldaysVerbose = (
             current = current.isoWeekday(isoDayIndex);
         } else {
             info = "  Day is GT wanted weekday, position on next weeks requested day.";
-            current = getMomentWeeksRelative(current, 1).isoWeekday(isoDayIndex);
+            current = getMomentRelative(current, 1, "weeks").isoWeekday(isoDayIndex);
         }
 
         const isoDay = current.format(isoDayFormat);
@@ -69,7 +70,7 @@ export const alldaysVerbose = (
 
         if (current.isSameOrBefore(range.end)) {
             foundDays.push(isoDay);
-            current = getMomentRelative(current, 1);
+            current = getMomentRelative(current, 1, "days");
             logs.push(`${info}
             => Found: '${isoDay}', jump to next day.
             `);
@@ -87,81 +88,3 @@ export const alldaysVerbose = (
         logs: logs.join("\r\n"),
     };
 }
-
-export const isoDayFormat = "YYYY-MM-DD";
-export const firstDayCurrentYear = moment().startOf("year");
-export const lastDayCurrentYear = moment().endOf("year");
-
-export const determineRange = (
-    isoFrom: string,
-    isoTo: string): {
-        start: moment.Moment,
-        end: moment.Moment,
-        validArgs: boolean
-    } => {
-    let hasErrors = false;
-
-    let temp = firstDayCurrentYear;
-    if (isoFrom) {
-        temp = moment(isoFrom);
-        if (!temp.isValid()) {
-            hasErrors = true;
-        }
-    }
-
-    let start = temp.clone();
-
-    if (!hasErrors) {
-        start = temp.startOf("year"); // firstDayOfYear
-    }
-
-    let end = lastDayCurrentYear;
-    if (isoTo) {
-        temp = moment(isoTo);
-        if (!temp.isValid()) {
-            hasErrors = true;
-        } else {
-            end = temp.clone();
-        }
-    }
-
-    return {
-        start: start,
-        end: end,
-        validArgs: !hasErrors
-    };
-}
-
-export const buildSearchCriteria = (
-    isoFrom: string,
-    isoTo: string,
-    isoDayIndex: number,
-    start: moment.Moment,
-    end: moment.Moment): string => {
-    const dayName = moment(start).isoWeekday(isoDayIndex).format('ddd');
-
-    return `ARGS: isoDayIndex='${isoDayIndex}', isoFrom='${isoFrom}', isoTo='${isoTo}'.
-    => Search for '${dayName}days': Start='${start.format(isoDayFormat)}', End='${end.format(isoDayFormat)}'.
-    `;
-}
-
-export const getDayWeeksRelative = (isoDay: string, weekOffset: number): string => {
-    return getMomentWeeksRelative(moment(isoDay), weekOffset).format(isoDayFormat);
-}
-
-export const getDayRelative = (isoDay: string, dayOffset: number): string => {
-    return getMomentRelative(moment(isoDay), dayOffset).format(isoDayFormat);
-}
-
-export const getMomentWeeksRelative = (mom: moment.Moment, weekOffset: number): moment.Moment => {
-    return mom.add(weekOffset, "weeks");
-}
-
-export const getMomentRelative = (mom: moment.Moment, dayOffset: number): moment.Moment => {
-    return mom.add(dayOffset, "days");
-}
-
-export const getWeekDayShortNames = (): string[] => {
-    return moment.weekdaysShort();
-}
-

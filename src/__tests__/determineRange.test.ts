@@ -1,12 +1,12 @@
-import { determineRange, firstDayCurrentYear, lastDayCurrentYear } from "../index";
-import moment from "moment";
+import { currentYearEndDay, currentYearStartDay} from "../other";
+import { determineRange } from "../determineRange";
 
 describe("determineRange", () => {
 
     test("empty args", () => {
         //Arrange
-        let expectedStart = firstDayCurrentYear;
-        let expectedEnd = lastDayCurrentYear;
+        let expectedStart = currentYearStartDay;
+        let expectedEnd = currentYearEndDay;
         //Act
         let range = determineRange("", "");
         //Assert
