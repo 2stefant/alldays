@@ -1,4 +1,5 @@
-import { isoDayFormat, getMomentRelative, getDayMetrics, getDayInWeek } from "./other";
+import moment from "moment";
+import { isoDayFormat, getMomentRelative, getDayMetrics, getDayInWeek, getDayCurrentMetrics } from "./other";
 import { determineRange, buildSearchCriteria } from "./determineRange";
 /**
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
@@ -94,10 +95,27 @@ export const alldaysVerbose = (
  * Gets day metrics for the specified day.
  * @param isoDay YYYY-MM-DD, default is current day
  */
-export const dayMetrics = (isoDay: string = "") => getDayMetrics(isoDay);
+export const dayMetrics = (isoDay: string = "") =>
+    getDayMetrics(isoDay);
+/**
+ * Gets current day metrics.
+ */
+export const dayCurrentMetrics = () =>
+    getDayCurrentMetrics();
 /**
  * Gets the day in the week specified by the index, e.g. 1 becomes monday.
  * @param isoDay YYYY-MM-DD, default is current day
  * @param isoDayIndex 1-7, default is sunday 7
  */
-export const dayInWeek = (isoDay: string = "", isoDayIndex: number = 7) => getDayInWeek(isoDay, isoDayIndex);
+export const dayInWeek = (isoDay: string = "", isoDayIndex: number = 7) =>
+    getDayInWeek(isoDay, isoDayIndex);
+/**
+ * Gets short week names, Mon...Sun.
+ */
+export const getWeekDaysShort = () =>
+    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Total"];
+/**
+ * Gets short month names, Jan...Dec.
+ */
+export const getMonthsShort = () =>
+    moment.monthsShort();

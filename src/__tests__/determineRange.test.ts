@@ -1,4 +1,4 @@
-import { currentYearEndDay, currentYearStartDay} from "../other";
+import { currentYearEndDay, currentYearStartDay } from "../other";
 import { determineRange } from "../determineRange";
 
 describe("determineRange", () => {

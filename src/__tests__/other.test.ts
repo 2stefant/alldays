@@ -1,4 +1,4 @@
-import { isoDayFormat, getDayWeeksRelative, getDayRelative, getDayMetrics, getDayInWeek } from "../other";
+import { isoDayFormat, getRelative, getDayMetrics, getDayInWeek } from "../other";
 import moment from "moment";
 
 describe("other", () => {
@@ -63,42 +63,42 @@ describe("other", () => {
         expect(metrics.yearEndDay).toEqual("2019-12-31");
     });
 
-    test("getDayWeeksRelative 1 after", () => {
+    test("getRelative 1 week after", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-15";
         //Act
-        let day = getDayWeeksRelative(actual, 1);
+        let day = getRelative(actual, 1, "weeks");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getDayWeeksRelative 1 before", () => {
+    test("getRelative 1 week before", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-01";
         //Act
-        let day = getDayWeeksRelative(actual, -1);
+        let day = getRelative(actual, -1, "weeks");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getDayRelative 1 after", () => {
+    test("getRelative 1 day after", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-09";
         //Act
-        let day = getDayRelative(actual, 1);
+        let day = getRelative(actual, 1, "days");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getDayRelative 1 before", () => {
+    test("getRelative 1 day before", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-07";
         //Act
-        let day = getDayRelative(actual, -1);
+        let day = getRelative(actual, -1, "days");
         //Assert
         expect(day).toEqual(expected);
     });
