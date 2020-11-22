@@ -1,4 +1,4 @@
-import { isoDayFormat, getMomentRelative } from "./other";
+import { isoDayFormat, getMomentRelative, getDayMetrics } from "./other";
 import { determineRange, buildSearchCriteria } from "./determineRange";
 /**
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
@@ -88,3 +88,5 @@ export const alldaysVerbose = (
         logs: logs.join("\r\n"),
     };
 }
+
+export const dayMetrics = (isoDay: string) => getDayMetrics(isoDay);
