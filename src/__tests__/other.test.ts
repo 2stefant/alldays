@@ -1,7 +1,13 @@
-import { isoDayFormat, getDayWeeksRelative, getDayRelative, getDayMetrics } from "../other";
+import { isoDayFormat, getDayWeeksRelative, getDayRelative, getDayMetrics, getDayInWeek } from "../other";
 import moment from "moment";
 
 describe("other", () => {
+
+    test("dayInWeek", () => {
+        //Assert
+        expect(getDayInWeek("2020-11-22",1)).toEqual("2020-11-16"); // monday
+        expect(getDayInWeek("2020-11-22",5)).toEqual("2020-11-20"); // friday
+    });
 
     test("getDayMetrics - day", () => {
         //Act

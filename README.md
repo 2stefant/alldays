@@ -21,7 +21,7 @@ This npm package is written with:
 
 ## Declare - in a javascript code file
 ``` javascript
-const {alldays, dayMetrics} = require("@2stefant.org/alldays");
+const {alldays, dayMetrics, dayInWeek} = require("@2stefant.org/alldays");
 ```
 ## Call
 
@@ -46,6 +46,10 @@ The method _dayMetrics_ provides various Day related metrics such as: \
 day, dayBefore, weekStartDay, currentWeek, quarter, currentYearStartDay etc.
 ```javascript
 return dayMetrics("2020-11-22");
+
+// Other useful methods:
+console.log(dayInWeek"2020-11-22",1)); // 2020-11-16, monday.
+console.log(dayInWeek"2020-11-22",5)); // 2020-11-20, friday.
 ```
 
 ### Zero or one argument, index range 1-7, 10-17, 20-27

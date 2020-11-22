@@ -1,4 +1,4 @@
-import { isoDayFormat, getMomentRelative, getDayMetrics } from "./other";
+import { isoDayFormat, getMomentRelative, getDayMetrics, getDayInWeek } from "./other";
 import { determineRange, buildSearchCriteria } from "./determineRange";
 /**
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
@@ -90,3 +90,4 @@ export const alldaysVerbose = (
 }
 
 export const dayMetrics = (isoDay: string) => getDayMetrics(isoDay);
+export const dayInWeek = (isoDay: string, isoDayIndex: number) => getDayInWeek(isoDay, isoDayIndex);
