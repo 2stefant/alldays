@@ -1,6 +1,7 @@
 import moment from "moment";
-import { isoDayFormat, getMomentRelative, getDayMetrics, getDayInWeek, getDayCurrentMetrics } from "./other";
+import { isoDayFormat, getMomentRelative, getDayMetrics, getCalendarMetrics, getCalendarBoundary, getDayInWeek } from "./other";
 import { determineRange, buildSearchCriteria } from "./determineRange";
+
 /**
  * @todo IMPORTANT: ONLY (1-7) IS IMPLEMENTED FOR NOW. 
  * @description Calculates specific week days between a date range.
@@ -97,11 +98,23 @@ export const alldaysVerbose = (
  */
 export const dayMetrics = (isoDay: string = "") =>
     getDayMetrics(isoDay);
+
 /**
- * Gets current day metrics.
+ * Gets week/month/quarter/midyear/year) metrics for the specified day.
+ * @param isoDay YYYY-MM-DD, default is current day
  */
-export const dayCurrentMetrics = () =>
-    getDayCurrentMetrics();
+export const calendarMetrics = (isoDay: string = "") =>
+    getCalendarMetrics(isoDay);
+
+/**
+ * Gets boundary for week/month/quarter/year) metrics for the specified day.
+ * @param isoDay YYYY-MM-DD, default is current day
+ * @param startOrEnd true if start, false if end
+ * @param unit ["week","month", "quarter", "year"]
+ */
+export const calendarBoundary = (isoDay: string="", startOrEnd: boolean = true, unit: any = ""): string => 
+    getCalendarBoundary(isoDay, startOrEnd, unit);
+
 /**
  * Gets the day in the week specified by the index, e.g. 1 becomes monday.
  * @param isoDay YYYY-MM-DD, default is current day
@@ -109,13 +122,15 @@ export const dayCurrentMetrics = () =>
  */
 export const dayInWeek = (isoDay: string = "", isoDayIndex: number = 7) =>
     getDayInWeek(isoDay, isoDayIndex);
+
 /**
  * Gets short week names, Mon...Sun.
  */
-export const getWeekDaysShort = () =>
-    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Total"];
+export const weekDaysShort = () =>
+    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
 /**
  * Gets short month names, Jan...Dec.
  */
-export const getMonthsShort = () =>
+export const monthsShort = () =>
     moment.monthsShort();

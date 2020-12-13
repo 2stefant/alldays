@@ -4,49 +4,44 @@ export const getDayMetrics = (isoDay: string = ""): any => {
     if (!isoDay) {
         isoDay = currentIsoDay;
     }
+    const mom = moment(isoDay);
     return {
-        day: moment(isoDay).format(isoDayFormat),
-        dayIndex: moment(isoDay).isoWeekday(),
-        dayNameShort: moment(isoDay).format('ddd'),
-        dayBefore: getRelative(isoDay, -1, "days"),
-        dayAfter: getRelative(isoDay, 1, "days"),
-        dayOfYear: moment(isoDay).dayOfYear(),
-        dayWeekBefore: getRelative(isoDay, -1, "weeks"),
-        dayWeekAfter: getRelative(isoDay, 1, "weeks"),
-        daysInMonth: moment(isoDay).daysInMonth(),
-
-        week: moment(isoDay).isoWeek(),
-        weekStartDay: getDayInWeek(isoDay, 1),
-        weekEndDay: getDayInWeek(isoDay, 7),
-        weeksInYear: moment(isoDay).isoWeeksInYear(),
-
-        month: moment(isoDay).month() + 1,
-        monthStartDay: getBoundary(isoDay, true, "month"),
-        monthEndDay: getBoundary(isoDay, false, "month"),
-
-        quarter: moment(isoDay).quarter(),
-        quarterStartDay: getBoundary(isoDay, true, "quarter"),
-        quarterEndDay: getBoundary(isoDay, false, "quarter"),
-
-        year: moment(isoDay).year(),
-        yearStartDay: getBoundary(isoDay, true, "year"),
-        yearEndDay: getBoundary(isoDay, false, "year"),
+        day: mom.format(isoDayFormat),
+        dayIndex: mom.isoWeekday(),
+        dayNameShort: mom.format('ddd'),
+        dayBefore: getCalendarRelative(isoDay, -1, "days"),
+        dayAfter: getCalendarRelative(isoDay, 1, "days"),
+        dayOfYear: mom.dayOfYear(),
+        dayWeekBefore: getCalendarRelative(isoDay, -1, "weeks"),
+        dayWeekAfter: getCalendarRelative(isoDay, 1, "weeks"),
     };
 }
 
-export const getDayCurrentMetrics = (): any => {
+export const getCalendarMetrics = (isoDay: string = ""): any => {
+    if (!isoDay) {
+        isoDay = currentIsoDay;
+    }
+    const mom = moment(isoDay);
     return {
-        currentDay: currentIsoDay,
-        currentDayIndex: moment().isoWeekday(),
-        currentDayNameShort: moment().format('ddd'),
-        currentWeek: moment().isoWeek(),
-        currentMonth: moment().month() + 1,
-        currentQuarter: moment().quarter(),
-        currentQuarterStartDay: getBoundary("", true, "quarter"),
-        currentQuarterEndDay: getBoundary("", false, "quarter"),
-        currentYear: moment().year(),
-        currentYearStartDay: currentYearStartDay,
-        currentYearEndDay: currentYearEndDay,
+        day: mom.format(isoDayFormat),
+
+        week: mom.isoWeek(),
+        weekStartDay: getCalendarBoundary(isoDay, true, "week"),
+        weekEndDay: getCalendarBoundary(isoDay, false, "week"),
+        weeksInYear: mom.isoWeeksInYear(),
+
+        month: mom.month() + 1,
+        monthDays: mom.daysInMonth(),
+        monthStartDay: getCalendarBoundary(isoDay, true, "month"),
+        monthEndDay: getCalendarBoundary(isoDay, false, "month"),
+
+        quarter: mom.quarter(),
+        quarterStartDay: getCalendarBoundary(isoDay, true, "quarter"),
+        quarterEndDay: getCalendarBoundary(isoDay, false, "quarter"),
+
+        year: mom.year(),
+        yearStartDay: getCalendarBoundary(isoDay, true, "year"),
+        yearEndDay: getCalendarBoundary(isoDay, false, "year"),
         isoDayFormat: isoDayFormat,
     };
 }
@@ -59,7 +54,7 @@ export const getDayInWeek = (isoDay: string = "", isoDayIndex: number = 7): stri
     return moment(isoDay).isoWeekday(isoDayIndex).format(isoDayFormat);
 }
 
-export const getRelative = (isoDay: string, offset: number, unit: any): string => {
+export const getCalendarRelative = (isoDay: string, offset: number, unit: any): string => {
     VerifyUnit(unit, ["days", "weeks", "months", "years"]);
     if (!isoDay) {
         isoDay = currentIsoDay;
@@ -67,10 +62,17 @@ export const getRelative = (isoDay: string, offset: number, unit: any): string =
     return moment(isoDay).add(offset, unit).format(isoDayFormat);
 }
 
-export const getBoundary = (isoDay: string, startOrEnd: boolean = true, unit: any = ""): string => {
-    VerifyUnit(unit, ["month", "quarter", "year"]);
+export const getCalendarBoundary = (isoDay: string = "", startOrEnd: boolean = true, unit: any = ""): string => {
+    VerifyUnit(unit, ["week", "month", "quarter", "year"]);
     if (!isoDay) {
         isoDay = currentIsoDay;
+    }
+
+    // Special case for weeks because Moment counts from sunday, but iso format counts from monday.
+    if (unit === "week") {
+        return startOrEnd
+            ? getDayInWeek(isoDay, 1)
+            : getDayInWeek(isoDay, 7);
     }
 
     const mom = startOrEnd

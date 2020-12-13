@@ -43,7 +43,7 @@ return {
 
 ### Day metrics
 The method _dayMetrics_ provides various Day related metrics such as: \
-day, dayBefore, weekStartDay, quarter etc.
+day, dayBefore etc.
 ```javascript
 return dayMetrics("2020-11-22");
 
@@ -51,9 +51,10 @@ return dayMetrics("2020-11-22");
 console.log(dayInWeek"2020-11-22",1)); // 2020-11-16, monday.
 console.log(dayInWeek"2020-11-22",5)); // 2020-11-20, friday.
 
-getWeekDaysShort();
-getMonthsShort();
-dayCurrentMetrics();
+weekDaysShort();
+monthsShort();
+calendarMetrics();
+calendarBoundary();
 ```
 
 ### Zero or one argument, index range 1-7, 10-17, 20-27

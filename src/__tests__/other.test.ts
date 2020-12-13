@@ -1,4 +1,4 @@
-import { isoDayFormat, getRelative, getDayMetrics, getDayInWeek } from "../other";
+import { isoDayFormat, getCalendarRelative, getDayMetrics, getCalendarMetrics, getCalendarBoundary, getDayInWeek } from "../other";
 import moment from "moment";
 
 describe("other", () => {
@@ -21,12 +21,11 @@ describe("other", () => {
         expect(metrics.dayOfYear).toEqual(342);
         expect(metrics.dayWeekBefore).toEqual("2019-12-01");
         expect(metrics.dayWeekAfter).toEqual("2019-12-15");
-        expect(metrics.daysInMonth).toEqual(31);
     });
 
-    test("getDayMetrics - week", () => {
+    test("getCalendarMetrics - week", () => {
         //Act
-        let metrics = getDayMetrics("2019-12-08"); //sunday, w49, day342
+        let metrics = getCalendarMetrics("2019-12-08"); //sunday, w49, day342
         //Assert
         expect(metrics.week).toEqual(49);
         expect(metrics.weekStartDay).toEqual("2019-12-02");
@@ -35,73 +34,128 @@ describe("other", () => {
         //expect(metrics.weekdaysShort).toEqual(["Mon"...]);
     });
 
-    test("getDayMetrics - month", () => {
+    test("getCalendarMetrics - month", () => {
         //Act
-        let metrics = getDayMetrics("2019-12-08"); //sunday, w49, day342
+        let metrics = getCalendarMetrics("2019-12-08"); //sunday, w49, day342
         //Assert
         expect(metrics.month).toEqual(12);
         expect(metrics.monthStartDay).toEqual("2019-12-01");
         expect(metrics.monthEndDay).toEqual("2019-12-31");
+        expect(metrics.monthDays).toEqual(31);
+
         //expect(metrics.monthsShort).toEqual(["Jan"...]);
     });
 
-    test("getDayMetrics - quarter", () => {
+    test("getCalendarMetrics - quarter", () => {
         //Act
-        let metrics = getDayMetrics("2019-12-08"); //sunday, w49, day342
+        let metrics = getCalendarMetrics("2019-12-08"); //sunday, w49, day342
         //Assert
         expect(metrics.quarter).toEqual(4);
         expect(metrics.quarterStartDay).toEqual("2019-10-01");
         expect(metrics.quarterEndDay).toEqual("2019-12-31");
     });
 
-    test("getDayMetrics - year", () => {
+    test("getCalendarMetrics - year", () => {
         //Act
-        let metrics = getDayMetrics("2019-12-08"); //sunday, w49, day342
+        let metrics = getCalendarMetrics("2019-12-08"); //sunday, w49, day342
         //Assert
         expect(metrics.year).toEqual(2019);
         expect(metrics.yearStartDay).toEqual("2019-01-01");
         expect(metrics.yearEndDay).toEqual("2019-12-31");
     });
 
-    test("getRelative 1 week after", () => {
+    test("getCalendarRelative 1 week after", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-15";
         //Act
-        let day = getRelative(actual, 1, "weeks");
+        let day = getCalendarRelative(actual, 1, "weeks");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getRelative 1 week before", () => {
+    test("getCalendarRelative 1 week before", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-01";
         //Act
-        let day = getRelative(actual, -1, "weeks");
+        let day = getCalendarRelative(actual, -1, "weeks");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getRelative 1 day after", () => {
+    test("getCalendarRelative 1 day after", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-09";
         //Act
-        let day = getRelative(actual, 1, "days");
+        let day = getCalendarRelative(actual, 1, "days");
         //Assert
         expect(day).toEqual(expected);
     });
 
-    test("getRelative 1 day before", () => {
+    test("getCalendarRelative 1 day before", () => {
         //Arrange
         let actual = "2020-08-08";
         let expected = "2020-08-07";
         //Act
-        let day = getRelative(actual, -1, "days");
+        let day = getCalendarRelative(actual, -1, "days");
         //Assert
         expect(day).toEqual(expected);
     });
+
+    test("getCalendarBoundary week start/end", () => {
+        //Arrange
+        let actual = "2020-12-10";
+        let expectedStart = "2020-12-07";
+        let expectedEnd = "2020-12-13";
+        //Act
+        let dayStart = getCalendarBoundary(actual, true, "week");
+        let dayEnd = getCalendarBoundary(actual, false, "week");
+        //Assert
+        expect(dayStart).toEqual(expectedStart);
+        expect(dayEnd).toEqual(expectedEnd);
+    });
+
+    test("getCalendarBoundary month start/end", () => {
+        //Arrange
+        let actual = "2020-11-15";
+        let expectedStart = "2020-11-01";
+        let expectedEnd = "2020-11-30";
+        //Act
+        let dayStart = getCalendarBoundary(actual, true, "month");
+        let dayEnd = getCalendarBoundary(actual, false, "month");
+        //Assert
+        expect(dayStart).toEqual(expectedStart);
+        expect(dayEnd).toEqual(expectedEnd);
+    });
+
+    test("getCalendarBoundary quarter start/end", () => {
+        //Arrange
+        let actual = "2020-08-12";
+        let expectedStart = "2020-07-01";
+        let expectedEnd = "2020-09-30";
+        //Act
+        let dayStart = getCalendarBoundary(actual, true, "quarter");
+        let dayEnd = getCalendarBoundary(actual, false, "quarter");
+        //Assert
+        expect(dayStart).toEqual(expectedStart);
+        expect(dayEnd).toEqual(expectedEnd);
+    });
+
+    test("getCalendarBoundary year start/end", () => {
+        //Arrange
+        let actual = "2020-12-10";
+        let expectedStart = "2020-01-01";
+        let expectedEnd = "2020-12-31";
+        //Act
+        let dayStart = getCalendarBoundary(actual, true, "year");
+        let dayEnd = getCalendarBoundary(actual, false, "year");
+        //Assert
+        expect(dayStart).toEqual(expectedStart);
+        expect(dayEnd).toEqual(expectedEnd);
+    });
+
 
     //Learns about moment api.
     test("firstDayCurrentYear", () => {
